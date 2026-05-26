@@ -5,6 +5,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import authRoutes from "./modules/auth/auth.routes.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
+import incidentsRoutes from "./modules/incidents/incidents.routes.js";
 import { authLimiter } from "./middlewares/rate-limit.middleware.js";
 import { notFoundHandler, errorHandler } from "./middlewares/error.middleware.js";
 
@@ -23,6 +24,7 @@ app.get("/health", (req, res) => {
 
 app.use("/auth", authLimiter, authRoutes);
 app.use("/admin", adminRoutes);
+app.use("/incidents", incidentsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 

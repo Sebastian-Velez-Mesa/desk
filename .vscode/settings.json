@@ -1,0 +1,16 @@
+{
+  "workbench.colorTheme": "Tokyo Night",
+  "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 22,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.smoothScrolling": true,
+  "workbench.list.smoothScrolling": true,
+  "editor.minimap.enabled": false,
+  "workbench.activityBar.location": "hidden",
+  "window.menuBarVisibility": "compact",
+  "editor.guides.bracketPairs": true,
+  "editor.guides.indentation": true
+}

@@ -8,14 +8,27 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   name         String
-  email        String   @unique
+  email        String     @unique
   passwordHash String
-  role         String   @default("CLIENTE") // ADMIN, CLIENTE
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
+  role         String     @default("CLIENTE") // ADMIN, CLIENTE
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
   orders       Order[]
+  incidents    Incident[]
+}
+
+model Incident {
+  id               Int      @id @default(autoincrement())
+  title            String
+  description      String
+  severity         String   // LOW, MEDIUM, HIGH
+  reporterEmail    String
+  containsPersonal Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  createdById      Int
+  createdBy        User     @relation(fields: [createdById], references: [id])
 }
 
 model Product {
