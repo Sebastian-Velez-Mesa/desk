@@ -70,3 +70,42 @@ export async function listIncidents(req, res) {
     return res.status(500).json({ message: "Error al listar los incidentes" });
   }
 }
+
+export async function updateIncident(req, res) {
+  try {
+    const { id } = req.params;
+    const { severity, description } = req.body;
+    
+    const incident = await prisma.incident.findUnique({ where: { id: Number(id) } });
+    if (!incident) return res.status(404).json({ message: "Incidente no encontrado" });
+
+    if (incident.createdById !== req.user.id && req.user.role !== "ADMIN") {
+      return res.status(403).json({ message: "No autorizado para actualizar este incidente" });
+    }
+
+    const updated = await prisma.incident.update({
+      where: { id: Number(id) },
+      data: {
+        severity: severity || incident.severity,
+        description: description ? sanitizeText(description) : incident.description
+      }
+    });
+    return res.status(200).json(updated);
+  } catch (error) {
+    return res.status(500).json({ message: "Error al actualizar el incidente" });
+  }
+}
+
+export async function deleteIncident(req, res) {
+  try {
+    const { id } = req.params;
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ message: "Solo administradores pueden eliminar incidentes" });
+    }
+
+    await prisma.incident.delete({ where: { id: Number(id) } });
+    return res.status(200).json({ message: "Incidente eliminado correctamente" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error al eliminar el incidente" });
+  }
+}
